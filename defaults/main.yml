@@ -1,0 +1,13 @@
+---
+# The Docker repo name
+docker_repo: docker/docker-credential-helpers
+
+# The API endpoint   
+docker_github_url: https://api.github.com/repos
+
+# Only supply a value, if you want a specific release installed. Otherwise, the latest is installed.
+docker_release_tag_name: ""
+
+# Where the new binaries will be installed
+docker_bin_dest: /usr/local/bin  
+

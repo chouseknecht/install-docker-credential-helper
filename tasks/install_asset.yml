@@ -1,0 +1,23 @@
+# install_asset.yml 
+---
+- name: Download the asset
+  get_url:
+    url: "{{ asset_url }}"
+    dest: "{{ docker_bin_dest }}/{{ asset_name }}"
+
+- name: Untar it
+  shell: "tar xvzf {{ docker_bin_dest }}/{{ asset_name }}" 
+  args:
+    chdir: "{{ docker_bin_dest }}"
+  when: asset_name | search('gz$')
+
+- name: Unzip it
+  shell: "unzip {{ docker_bin_dest }}/{{ asset_name }}" 
+  args:
+    chdir: "{{ docker_bin_dest }}"
+  when: asset_name | search('zip$')
+
+- name: Remove archive
+  file:
+    path: "{{ docker_bin_dest }}/{{ asset_name }}"
+    state: absent

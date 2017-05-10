@@ -1,0 +1,23 @@
+---
+- name: Get docker assets
+  include: get_assets.yml
+
+- name: Get the linux asset
+  include: get_linux_asset.yml
+  with_items: "{{ assets.json }}"
+  when: assets is defined and ansible_os_family != 'Darwin' and ansible_os_family != 'Windows'
+
+- name: Get the Mac asset
+  include: get_darwin_asset.yml
+  with_items: "{{ assets.json }}"
+  when: assets is defined and ansible_os_family == 'Darwin'
+
+- name: Should have an asset_url and asset_name
+  assert:
+    that:
+    - asset_url is defined
+    - asset_name is defined
+
+- name: Install credential helper binaries
+  include: install_asset.yml
+
